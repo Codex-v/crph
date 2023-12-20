@@ -12,7 +12,7 @@ from time import  sleep
 def facescan(request):
         result = [0]
         # result = Util.match("9ui","ui")
-        if request.method == ("POST"):
+        if request.method == "POST":
                 form = imageform(request.POST,request.FILES)
                 data =request.FILES['image']
                 Util.handle_uploaded_file(request.FILES['image'])
@@ -25,6 +25,8 @@ def facescan(request):
                         if result[0]:
                                 return HttpResponse(f"{i}.jpg")
 
-
-        return HttpResponse({"message":"done"})
-
+                        else:
+                                return HttpResponse({"match not found!"})
+        else:
+                params = {"img": f'{s.BASE_DIR}'}
+                return render(request, 'login.html',params)

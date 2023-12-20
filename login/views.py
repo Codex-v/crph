@@ -30,3 +30,5 @@ def login(request):
     else:
         params = {"img": f'{s.BASE_DIR}'}
         return render(request, 'login.html',params)
+
+
