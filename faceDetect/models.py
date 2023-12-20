@@ -1,4 +1,5 @@
 from django.db import models
+from django import  forms
 
 # Create your models here.
 
@@ -45,4 +46,15 @@ class FacedetectFile(models.Model):
         managed = False
         db_table = 'faceDetect_file'
 
+class imageView(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/')
 
+
+class Imagetable(models.Model):
+    imageid = models.AutoField(db_column='ImageID', primary_key=True)  # Field name made lowercase.
+    imagedata = models.BinaryField(db_column='ImageData', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'ImageTable'
