@@ -5,27 +5,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Face Detection System</title>
-    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body style="background-image: url('{% static 'images/scifi/final-main-page.jpg' %}')">
-      <div id="database-image">
-        <div class="glow-text">Database Image</div>
-        <div class="blurry-image">
-          <img
-            src="{% static 'images/scifi/1673027002822.jpg' %}"
-            alt="Blurred Image"
-            id="blurryImg"
-            width="400"
-            height="400"
-          />
-        </div>
+  <body
+    style="
+      background-image: url('{% static 'images/scifi/final-main-page.jpg' %}');
+    "
+  >
+    <div id="database-image">
+      <div class="glow-text">Database Image</div>
+      <div class="blurry-image">
+        <img
+          src="{% static 'images/scifi/1673027002822.jpg' %}"
+          alt="Blurred Image"
+          id="blurryImg"
+          width="400"
+          height="400"
+        />
       </div>
-      <div id="target-image">
-        <div class="glow-text">Target Image</div>
-        <div id="dropZone">
-          <form action="/facedetect/D1" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-          <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    </div>
+    <div id="target-image">
+      <div class="glow-text">Target Image</div>
+      <div id="dropZone">
+        <form
+          action="/facedetect/D1"
+          method="post"
+          enctype="multipart/form-data"
+          id="targetImage_form"
+        >
+          {% csrf_token %}
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            style="display: none"
+            name="image"
+          />
           <div class="scanner">
             <img
               src="{% static 'images/scifi/anonymous.jpg' %}"
@@ -36,17 +55,17 @@
             />
             <div class="scanning-bar"></div>
           </div>
-          </form>
-        </div>
+        </form>
       </div>
-      <div id="fingerprint">
-        <img
-          src="{% static 'images/scifi/fingerprint.gif' %}"
-          alt="Third Frame"
-          width="150"
-          height="200"
-        />
-      </div>
+    </div>
+    <div id="fingerprint">
+      <img
+        src="{% static 'images/scifi/fingerprint.gif' %}"
+        alt="Third Frame"
+        width="150"
+        height="200"
+      />
+    </div>
   </body>
   <!-- photo shuffle code -->
   <script>
@@ -72,33 +91,50 @@
     const defaultImage = document.getElementById("targetImg");
     const fileInput = document.getElementById("fileInput");
     const scanningBar = document.querySelector(".scanning-bar");
-  
+
     dropZone.addEventListener("click", () => {
       fileInput.click();
     });
-  
+
     fileInput.addEventListener("change", (event) => {
       const file = event.target.files[0];
       if (file && file.type.match(/^image\//)) {
         const reader = new FileReader();
         reader.onload = function (e) {
           defaultImage.src = e.target.result;
-          scanningBar.style.display = "block"; 
+          scanningBar.style.display = "block";
+
+          const formData = new FormData();
+          formData.append("image", file);
+          $.ajax({
+            url: "D1", // Replace with your server-side URL
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              console.log(response);
+              // Handle success response
+            },
+            error: function (xhr, status, error) {
+              console.error("Error uploading the image:", error);
+              // Handle error
+            },
+          });
         };
         reader.readAsDataURL(file);
-
       } else {
         alert("Please select an image file.");
       }
     });
-  
+
     dropZone.addEventListener("dragover", (event) => {
       event.preventDefault();
     });
-  
+
     dropZone.addEventListener("drop", (event) => {
       event.preventDefault();
-  
+
       if (event.dataTransfer.items) {
         for (let i = 0; i < event.dataTransfer.items.length; i++) {
           if (
@@ -107,7 +143,7 @@
           ) {
             const file = event.dataTransfer.items[i].getAsFile();
             const reader = new FileReader();
-  
+
             reader.onload = function (e) {
               defaultImage.src = e.target.result;
               scanningBar.style.display = "block";
@@ -115,7 +151,7 @@
               const formData = new FormData();
               formData.append("image", file);
               $.ajax({
-                url: "172.20.10.13:3500/facedetact/D1", // Replace with your server-side URL
+                url: "D1", // Replace with your server-side URL
                 type: "POST",
                 data: formData,
                 processData: false,
@@ -127,26 +163,72 @@
                 error: function (xhr, status, error) {
                   console.error("Error uploading the image:", error);
                   // Handle error
-                },
-              });
-
+                },
+              });
             };
-  
+
             reader.readAsDataURL(file);
             break;
           }
         }
       }
     });
-  
+
     defaultImage.addEventListener("load", () => {
-      console.log(defaultImage.src)
-      if (!defaultImage.src || defaultImage.src === "{% static 'images/scifi/anonymous.jpg' %}") {
+      console.log(defaultImage.src);
+      if (
+        !defaultImage.src ||
+        defaultImage.src === "{% static 'images/scifi/anonymous.jpg' %}"
+      ) {
         scanningBar.style.display = "none";
       } else {
         scanningBar.style.display = "block";
       }
     });
+
+    function api_calling() {
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Search for the CSRF cookie by name
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      // Include the CSRF token in the headers of your AJAX requests
+      $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+          if (!settings.crossDomain) {
+            const csrftoken = getCookie("csrftoken");
+            if (csrftoken) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+          }
+        },
+      });
+
+      // Your AJAX request
+      $.ajax({
+        url: "/your-endpoint/",
+        type: "POST",
+        data: yourData,
+        success: function (response) {
+          // Handle success
+        },
+        error: function (xhr, status, error) {
+          // Handle error
+        },
+      });
+    }
   </script>
-  
 </html>

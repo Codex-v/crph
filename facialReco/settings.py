@@ -98,14 +98,16 @@ WSGI_APPLICATION = "facialReco.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'faceDT',
-        'HOST': 'DARGON-MSI\\SQLEXPRESS',  # Use double backslashes for the backslash in the server name
+        'NAME': 'restaurant',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'JARVIS',
+        'PORT': '',
+
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
-            'MARS_Connection': True,
-            'Trusted_Connection': 'yes',  # Use Windows Authentication
         },
-    }
+    },
 }
 
 
