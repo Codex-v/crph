@@ -89,6 +89,7 @@
   <script>
     const dropZone = document.getElementById("dropZone");
     const defaultImage = document.getElementById("targetImg");
+    const databaseImage = document.getElementById("blurryImg");
     const fileInput = document.getElementById("fileInput");
     const scanningBar = document.querySelector(".scanning-bar");
 
@@ -113,9 +114,8 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              console.log(response);
-              reader.readAsBinaryString(response);
-              defaultImage.src = reader.result;              // Handle success response
+              defaultImage.src = response;
+              console.log(response)
             },
             error: function (xhr, status, error) {
               console.error("Error uploading the image:", error);

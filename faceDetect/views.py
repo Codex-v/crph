@@ -18,15 +18,15 @@ def facescan(request):
                 form = imageform(request.POST,request.FILES)
                 data =request.FILES['image']
                 image_name = Util.handle_uploaded_file(request.FILES['image'])
-                total_number_files = Util.count_items_in_folder(f'{s.BASE_DIR}\\faceDetect\\media')
+                total_number_files = Util.count_items_in_folder(f'{s.BASE_DIR}\\facedetect\\media')
                 print(total_number_files)
-                media_directory = f'{s.BASE_DIR}\\faceDetect\\media'
+                media_directory = f'{s.BASE_DIR}\\facedetect\\media'
                 result = Util.compare_faces_with_uploaded_image(image_name)
                 print(result)
 
                 if result[1]:
-                    binary_data = Util.imagetoBinary(f'{s.BASE_DIR}\\faceDetect\\media\\{result[0]}')
-                    response = HttpResponse(binary_data, content_type='image/jpeg')
+                    binary_data = Util.imagetoBinary(f'{s.BASE_DIR}\\facedetect\\media\\{result[0]}')
+                    response = HttpResponse(f'\\facedetect\\media\\{result[0]}', content_type='image/jpeg')
                     response['Content-Disposition'] = 'attachment; filename="image.jpg"'
                     print(response)
                     return response

@@ -6,8 +6,6 @@ from .views import *
 
 urlpatterns = [
     path('D1',facescan),
-    
-
 ]
 
 if settings.DEBUG:

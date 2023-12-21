@@ -8,7 +8,7 @@ i = 0
 
 def handle_uploaded_file(f):
     global i
-    with open(f'{s.BASE_DIR}\\faceDetect\\upload\\{f.name}.jpg',
+    with open(f'{s.BASE_DIR}\\facedetect\\upload\\{f.name}.jpg',
               'wb+') as destination:
         # rest of your code
 
@@ -20,22 +20,24 @@ class Util:
     @staticmethod
     def handle_uploaded_file(f):
         global i
-        with open(f'{s.BASE_DIR}\\faceDetect\\upload\\{f.name}', 'wb+') as destination:
+        with open(f'{s.BASE_DIR}\\facedetect\\upload\\{f.name}', 'wb+') as destination:
 
             for chunk in f.chunks():
                 destination.write(chunk)
         
         return f.name
     @staticmethod
-    def compare_faces_with_uploaded_image(image_search, media_dir=f"{s.BASE_DIR}\\faceDetect\\media"):
+    def compare_faces_with_uploaded_image(image_search, media_dir=f"{s.BASE_DIR}\\facedetect\\media"):
         print("This is to image ", image_search)
-        picture_of_me = face_recognition.load_image_file(os.path.join(f"{s.BASE_DIR}\\faceDetect\\upload", image_search))
+        picture_of_me = face_recognition.load_image_file(os.path.join(f"{s.BASE_DIR}\\facedetect\\upload", image_search))
         my_face_encoding = face_recognition.face_encodings(picture_of_me)[0]
         results = []
         for file_name in os.listdir(media_dir):
             if file_name.endswith(".jpg"):
-                unknown_picture = face_recognition.load_image_file(os.path.join(f"{s.BASE_DIR}\\faceDetect\\media", file_name))
+                unknown_picture = face_recognition.load_image_file(os.path.join(f"{s.BASE_DIR}\\facedetect\\media", file_name))
+                # unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]
                 unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]
+
                 result = face_recognition.compare_faces([my_face_encoding], unknown_face_encoding)[0]
                 if result:
                     results.append((file_name, result))
@@ -57,12 +59,12 @@ class Util:
 
     # def match(imageSearch):
     #     print("this is to image ",imageSearch)
-    #     items = os.listdir(f"{s.BASE_DIR}\\faceDetect\\upload")
+    #     items = os.listdir(f"{s.BASE_DIR}\\facedetect\\upload")
     #     total_items = len(items)
     #     print(f"Total items are {total_items}")
-    #     picture_of_me = face_recognition.load_image_file(f"{s.BASE_DIR}\\faceDetect\\upload\\{imageSearch}")
+    #     picture_of_me = face_recognition.load_image_file(f"{s.BASE_DIR}\\facedetect\\upload\\{imageSearch}")
     #     my_face_encoding = face_recognition.face_encodings(picture_of_me)[0]
-    #     unknown_picture = face_recognition.load_image_file(f"{s.BASE_DIR}\\faceDetect\\media\\{i}.jpg")
+    #     unknown_picture = face_recognition.load_image_file(f"{s.BASE_DIR}\\facedetect\\media\\{i}.jpg")
     #     unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]
     #     results = face_recognition.compare_faces([my_face_encoding], unknown_face_encoding)
         
@@ -72,8 +74,8 @@ class Util:
     # def match(fromImag, toimage):
     #     try:
     #         # Load the images
-    #         picture_of_me = face_recognition.load_image_file(f"{s.BASE_DIR}\\faceDetect\\upload\\{fromImag}")
-    #         unknown_picture = face_recognition.load_image_file(f"{s.BASE_DIR}\\faceDetect\\media\\{toimage}")
+    #         picture_of_me = face_recognition.load_image_file(f"{s.BASE_DIR}\\facedetect\\upload\\{fromImag}")
+    #         unknown_picture = face_recognition.load_image_file(f"{s.BASE_DIR}\\facedetect\\media\\{toimage}")
 
     #         # Get face encodings if faces are detected in both images
     #         my_face_encodings = face_recognition.face_encodings(picture_of_me)
