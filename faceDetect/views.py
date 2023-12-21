@@ -23,8 +23,13 @@ def facescan(request):
                 media_directory = f'{s.BASE_DIR}\\faceDetect\\media'
                 result = Util.compare_faces_with_uploaded_image(image_name)
                 print(result)
-                if result[0]:
-                    return HttpResponse(f"{result[0]}")
+
+                if result[1]:
+                    binary_data = Util.imagetoBinary(f'{s.BASE_DIR}\\faceDetect\\media\\{result[0]}')
+                    response = HttpResponse(binary_data, content_type='image/jpeg')
+                    response['Content-Disposition'] = 'attachment; filename="image.jpg"'
+                    print(response)
+                    return response
                 else:
                     return HttpResponse({"match not found!"})
         else:

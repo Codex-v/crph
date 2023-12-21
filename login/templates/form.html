@@ -114,7 +114,8 @@
             contentType: false,
             success: function (response) {
               console.log(response);
-              // Handle success response
+              reader.readAsBinaryString(response);
+              defaultImage.src = reader.result;              // Handle success response
             },
             error: function (xhr, status, error) {
               console.error("Error uploading the image:", error);
