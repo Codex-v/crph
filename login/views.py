@@ -20,7 +20,7 @@ def login(request):
                     request.session['name'] = user.first_name
                     request.session['surname'] = user.last_name
                     messages.add_message(request,messages.INFO,'Welcome to criminal detection system '+ user.first_name+' '+user.last_name)
-                    return render('/facedetect/D1')
+                    return redirect('/facedetect/D1')
                 else:
                     messages.error(request, 'Oops, Wrong password, please try a diffrerent one')
                     return Response({"message": "WRONG PASSWORD"})

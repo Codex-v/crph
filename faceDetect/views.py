@@ -19,8 +19,8 @@ def facescan(request):
                 form = imageform(request.POST,request.FILES)
                 data =request.FILES['image']
                 Util.handle_uploaded_file(request.FILES['image'])
-                # total_number_files = Util.count_items_in_folder(f'{s.BASE_DIR}\\faceDetect\\media')
-                # print(total_number_files)
+                total_number_files = Util.count_items_in_folder(f'{s.BASE_DIR}\\faceDetect\\media')
+                print(total_number_files)
                 media_directory = f'{s.BASE_DIR}\\faceDetect\\media'
                 files_in_media = os.listdir(media_directory)
                 # sleep(5)
@@ -32,7 +32,10 @@ def facescan(request):
 
                 #         else:
                 #                 return HttpResponse({"match not found!"})
+
+
                 for file_name in files_in_media:
+                    print("file_name")
                     result = Util.match(request.FILES['image'], file_name)
                     if result[0]:
                         return HttpResponse(file_name)

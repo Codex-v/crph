@@ -95,20 +95,34 @@ WSGI_APPLICATION = "facialReco.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'faceDT',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': 'JARVIS',
+#         'PORT': '',
+
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         },
+#     },
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'restaurant',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'JARVIS',
-        'PORT': '',
-
+        'NAME': 'faceDT',
+        'HOST': 'DARGON-MSI\\SQLEXPRESS',  # Use double backslashes for the backslash in the server name
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
+            'MARS_Connection': True,
+            'Trusted_Connection': 'yes',  # Use Windows Authentication
         },
-    },
+    }
 }
+
 
 
 # Password validation
