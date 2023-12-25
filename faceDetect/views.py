@@ -9,6 +9,8 @@ from time import  sleep
 from django.conf import settings as s
 from django.views.decorators.csrf import csrf_protect
 import os
+import json
+
 
 @csrf_protect
 def facescan(request):
@@ -28,9 +30,38 @@ def facescan(request):
                     response = HttpResponse(f'\\facedetect\\media\\{result[0]}', content_type='image/jpeg')
                     response['Content-Disposition'] = 'attachment; filename="image.jpg"'
                     print(response)
-                    return response
+                    json_data = ""
+                    json_name = str(result[0]).replace(".jpg",".json")
+                    with open(json_name,"r+") as file:
+                        json_data = json.load(json_name)
+
+                    return [response,json_data]
                 else:
                     return HttpResponse({"match not found!"})
         else:
                 params = {"img": f'{s.BASE_DIR}'}
                 return render(request, 'find-criminal.html',params)
+
+@api_view(["POST"])
+def getdata(request):
+    if request.method == 'POST':
+            image = request.FILES['image']
+            images_name = Util.handle_media_file(image,"file")
+            name = request.POST.get('name')
+            bloodgroup = request.POST.get('bloodGroup')
+            gender = request.POST.get('gender')
+            age = request.POST.get('age')
+            criminalrecord = request.POST.get('record')
+
+            data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
+            final_name = str(images_name).replace(".jpg","")
+            finaldata = json.dumps(data)
+            with open(f"{s.BASE_DIR}\\facedetect\\media\\{final_name}.json","w+") as file:
+                  file.writelines(finaldata)
+                  file.close() 
+            return HttpResponse("Criminal record set")
+    else:
+        return HttpResponse("record not set")
+            
+
+      

@@ -26,6 +26,16 @@ class Util:
                 destination.write(chunk)
         
         return f.name
+    
+    @staticmethod
+    def handle_media_file(f,file="ved"):
+        global i
+        with open(f'{s.BASE_DIR}\\facedetect\\media\\{f.name}', 'wb+') as destination:
+
+            for chunk in f.chunks():
+                destination.write(chunk)
+        
+        return f.name
     @staticmethod
     def compare_faces_with_uploaded_image(image_search, media_dir=f"{s.BASE_DIR}\\facedetect\\media"):
         print("This is to image ", image_search)
@@ -41,6 +51,7 @@ class Util:
                 result = face_recognition.compare_faces([my_face_encoding], unknown_face_encoding)[0]
                 if result:
                     results.append((file_name, result))
+                    break
         # for file_name, result in results:
         #     print(f"{file_name}: {result}")
         #     # if result:
