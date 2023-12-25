@@ -7,11 +7,10 @@ from .serizailer import imageform
 from .models import Imagetable
 from time import  sleep
 from django.conf import settings as s
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 import os
 
-# def save_theimage(req)
-@csrf_exempt
+@csrf_protect
 def facescan(request):
         result = [0]
         if request.method == "POST":
@@ -34,4 +33,4 @@ def facescan(request):
                     return HttpResponse({"match not found!"})
         else:
                 params = {"img": f'{s.BASE_DIR}'}
-                return render(request, 'form.html',params)
+                return render(request, 'find-criminal.html',params)

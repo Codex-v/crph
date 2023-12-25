@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+</head>
+<body style="background-image: url('{% static 'images/scifi/dashboard.jpg' %}');">
+    <div id="add-criminal">
+        <img src="{% static 'images/scifi/user-avatar.png' %}" alt="add_criminal_icon" height="100" width="100">
+        <p>Add Criminal</p>        
+    </div>
+    <div id="find-criminal" onclick="redirectToFaceDetect()">
+        <img src="{% static 'images/scifi/search-profile.png' %}" alt="add_criminal_icon" height="100" width="100">
+        <p>Find Criminal</p>        
+    </div>
+</body>
+<script>
+    function redirectToFaceDetect() {
+        window.location.href = '/facedetect/D1';
+    }
+</script>
+</html>

@@ -13,8 +13,9 @@
   </head>
   <body
     style="
-      background-image: url('{% static 'images/scifi/final-main-page.jpg' %}');
+      background-image: url('{% static 'images/scifi/one-frame.jpg' %}');
     "
+    id="body"
   >
     <div id="database-image">
       <div class="glow-text">Database Image</div>
@@ -25,6 +26,7 @@
           id="blurryImg"
           width="400"
           height="400"
+          class="blur-image-effect"
         />
       </div>
     </div>
@@ -66,6 +68,12 @@
         height="200"
       />
     </div>
+    <div id="criminal-info">
+      <p>Full Name: ******** ****** *******</p>
+      <p>Age: **</p>
+      <p>Gender: ****</p>
+      <p>Criminal Record: **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************</p>
+    </div>
   </body>
   <!-- photo shuffle code -->
   <script>
@@ -83,7 +91,7 @@
       index = (index + 1) % images.length;
     }
 
-    setInterval(changeImage, 50); // Change image every 3 seconds
+    var imagechanging = setInterval(changeImage, 50);
   </script>
   <!-- photo drop code -->
   <script>
@@ -104,29 +112,29 @@
         reader.onload = function (e) {
           defaultImage.src = e.target.result;
           scanningBar.style.display = "block";
-
-          const formData = new FormData();
+          document.getElementById("database-image").style.visibility = "visible";
+          document.getElementById("fingerprint").style.visibility = "visible";
+          var formData = new FormData();
           formData.append("image", file);
           $.ajax({
-            url: "D1", // Replace with your server-side URL
+            url: "D1",
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
             success: function (response) {
-              defaultImage.src = response;
-              console.log(response)
+              databaseImage.src = response;
+              databaseImage.classList.remove("blur-image-effect");
+              clearInterval(imagechanging);
+              document.getElementById("target-image").style.display = "none";
+              document.getElementById("fingerprint").style.display = "none";
+              document.getElementById("body").style.background = `url("${window.location.origin}/static/images/scifi/one-frame-side.jpg")`;
+              document.getElementById("body").style.backgroundSize = "cover";
+              document.getElementById("criminal-info").style.display = "block";
             },
             error: function (xhr, status, error) {
               console.error("Error uploading the image:", error);
-              // Handle error
             },
-
-
-
-
-
-            
           });
         };
         reader.readAsDataURL(file);
@@ -150,30 +158,34 @@
           ) {
             const file = event.dataTransfer.items[i].getAsFile();
             const reader = new FileReader();
-
             reader.onload = function (e) {
               defaultImage.src = e.target.result;
               scanningBar.style.display = "block";
-
-              const formData = new FormData();
+              document.getElementById("database-image").style.visibility = "visible";
+              document.getElementById("fingerprint").style.visibility = "visible";
+              var formData = new FormData();
               formData.append("image", file);
               $.ajax({
-                url: "D1", // Replace with your server-side URL
+                url: "D1",
                 type: "POST",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                  console.log(response);
-                  // Handle success response
+                  databaseImage.src = response;
+                  databaseImage.classList.remove("blur-image-effect");
+                  clearInterval(imagechanging);
+                  document.getElementById("target-image").style.display = "none";
+                  document.getElementById("fingerprint").style.display = "none";
+                  document.getElementById("body").style.background = `url("${window.location.origin}/static/images/scifi/one-frame-side.jpg")`;
+                  document.getElementById("body").style.backgroundSize = "cover";
+                  document.getElementById("criminal-info").style.display = "block";
                 },
                 error: function (xhr, status, error) {
                   console.error("Error uploading the image:", error);
-                  // Handle error
                 },
               });
             };
-
             reader.readAsDataURL(file);
             break;
           }
@@ -182,60 +194,21 @@
     });
 
     defaultImage.addEventListener("load", () => {
-      console.log(defaultImage.src);
       if (
         !defaultImage.src ||
-        defaultImage.src === "{% static 'images/scifi/anonymous.jpg' %}"
+        defaultImage.src ==
+          window.location.origin + '{% static "images/scifi/anonymous.jpg" %}'
       ) {
         scanningBar.style.display = "none";
+        document.getElementById("database-image").style.visibility = "hidden";
+        document.getElementById("fingerprint").style.visibility = "hidden";
       } else {
         scanningBar.style.display = "block";
+        document.getElementById("database-image").style.visibility = "visible";
+        document.getElementById("fingerprint").style.visibility = "visible";
+        document.getElementById("body").style.background = `url("${window.location.origin}/static/images/scifi/final-main-page.jpg")`;
+        document.getElementById("body").style.backgroundSize = "cover";
       }
     });
-
-    function api_calling() {
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          const cookies = document.cookie.split(";");
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Search for the CSRF cookie by name
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-
-      // Include the CSRF token in the headers of your AJAX requests
-      $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-          if (!settings.crossDomain) {
-            const csrftoken = getCookie("csrftoken");
-            if (csrftoken) {
-              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-          }
-        },
-      });
-
-      // Your AJAX request
-      $.ajax({
-        url: "/your-endpoint/",
-        type: "POST",
-        data: yourData,
-        success: function (response) {
-          // Handle success
-        },
-        error: function (xhr, status, error) {
-          // Handle error
-        },
-      });
-    }
   </script>
 </html>

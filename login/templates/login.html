@@ -9,20 +9,17 @@
 </head>
 <body style="background-image: url('{% static 'images/scifi/login.jpg' %}')">
   <div class="login-container">
-
     <div class="glow-text">Login</div>
     <form class="login-form" method="post">
       {% csrf_token %}
       <div class="input-custom">
         <img src="{% static 'images/scifi/person.svg' %}" alt="mail_icon" class="input-icon">
-        <input type="text" id="email" name="email" placeholder=" " required>
-        <label for="email">email</label>
+        <input type="text" id="email" name="email" placeholder="email" required>
         <div class="input-line"></div>
       </div>
       <div class="input-custom">
-        <img src="{% static 'images/scifi/person.svg' %}" alt="Password" class="input-icon">
-        <input type="password" id="password" name="password" placeholder=" " required>
-        <label for="password">Password</label>
+        <img src="{% static 'images/scifi/lock.svg' %}" alt="Password" class="input-icon">
+        <input type="password" id="password" name="password" placeholder="password" required>
         <div class="input-line"></div>
       </div>
       <button type="submit">

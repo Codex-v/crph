@@ -55,8 +55,6 @@ class Util:
                 binary_data = image_file.read()
 
             return binary_data
-
-
     # def match(imageSearch):
     #     print("this is to image ",imageSearch)
     #     items = os.listdir(f"{s.BASE_DIR}\\facedetect\\upload")

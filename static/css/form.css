@@ -1,4 +1,5 @@
 body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,17 +18,18 @@ body {
   #database-image {
     margin-left: 135px;
     text-align: center;
+    visibility: hidden;
   }
   
   #target-image {
     margin-left: 200px;
-    margin-right: spx;
     text-align: center;
   }
   
   #fingerprint {
     margin-left: 200px;
     text-align: center;
+    visibility: hidden;
   }
   .scanner {
     position: relative;
@@ -59,7 +61,7 @@ body {
       rgba(95, 207, 128, 0.5)
     );
     animation: scan 2s linear infinite;
-    display: block;
+    display: none;
   }
   
   @keyframes scan {
@@ -121,15 +123,16 @@ body {
     }
   }
   
-  /* Styling for the first frame */
   .blurry-image {
     width: 175px;
     height: 225px;
     overflow: hidden;
     position: relative;
-    filter: blur(5px); /* Initial blur effect */
   }
   
+  .blur-image-effect {
+    filter: blur(5px);
+  }
   .blurry-image img {
     width: 100%;
     height: 100%;
@@ -146,30 +149,20 @@ body {
     text-shadow: 0 0 2px #555, 0 0 4px #555, 0 0 6px #555, 0 0 8px #555, 0 0 10px #555, 0 0 12px #555, 0 0 14px #555;
   }
   
-  
-  @media (max-width: 768px) {
-    body {
-      background-image: none;
-      background-color: black; /* Avoid background image on small screens */
-    }
-  
-    body > div {
-      margin: 0;
-    }
-  
-    #database-image,
-    #target-image,
-    #fingerprint {
-      margin-left: 0;
-      margin-right: 0;
-      text-align: center;
-    }
-  
-    .scanner,
-    .blurry-image img {
-      width: 100%;
-      height: auto;
-      max-width: 300px;
-      max-height: 300px;
-    }
+  #criminal-info {
+    width: 40rem;
+    display: none;
+    box-shadow: 0 0 10px #00f;
+    border: #00f 1px solid;
+    /* height: 18rem; */
+    margin-left: 6rem;
+  }
+
+  #criminal-info {
+    padding: 0px 10px;
+    word-wrap: break-word;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 2px #00f, 0 0 4px #00f, 0 0 6px #00f, 0 0 8px #00f, 0 0 10px #00f, 0 0 12px #00f, 0 0 14px #00f;
   }
