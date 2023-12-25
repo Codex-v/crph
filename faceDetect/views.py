@@ -4,11 +4,8 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from .utils import Util
 from .serizailer import imageform
-from .models import Imagetable
-from time import  sleep
 from django.conf import settings as s
 from django.views.decorators.csrf import csrf_protect
-import os
 import json
 
 
@@ -31,7 +28,7 @@ def facescan(request):
                     response['Content-Disposition'] = 'attachment; filename="image.jpg"'
                     print(response)
                     json_data = ""
-                    json_name = str(result[0]).replace(".jpg",".json")
+                    json_name = str(result[0]).replace(".jpg",".json").replace(".png",".json")
                     with open(json_name,"r+") as file:
                         json_data = json.load(json_name)
 
