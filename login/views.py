@@ -20,13 +20,13 @@ def login(request):
                     request.session['name'] = user.first_name
                     request.session['surname'] = user.last_name
                     messages.add_message(request,messages.INFO,'Welcome to criminal detection system '+ user.first_name+' '+user.last_name)
-                    return render(request,"form.html")
+                    return redirect('/facedetect/D1')
                 else:
                     messages.error(request, 'Oops, Wrong password, please try a diffrerent one')
-                    return Response({"message": "WRONG PASSWORD"})
+                    return HttpResponse({"message": "WRONG PASSWORD"})
         else:
                 messages.error(request, 'Oops, That police ID do not exist')
-                return Response({"message": "DOESNT EXIST"})
+                return HttpResponse({"message": "DOESNT EXIST"})
     else:
         params = {"img": f'{s.BASE_DIR}'}
         return render(request, 'login.html',params)

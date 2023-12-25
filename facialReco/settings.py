@@ -16,8 +16,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FACEDIRECTORY_DIR = os.path.join(BASE_DIR, 'facedetect')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(FACEDIRECTORY_DIR, 'media')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'login',
     'faceDetect',
+    'dashboard',
     'rest_framework'
 ]
 
@@ -99,14 +103,30 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'faceDT',
-        'HOST': 'DARGON-MSI\\SQLEXPRESS',  # Use double backslashes for the backslash in the server name
+        'USER': 'Admin',
+        'PASSWORD': 'Hello@123',
+        'HOST': '103.21.160.164,1440',
+        'PORT': '',
+
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
-            'MARS_Connection': True,
-            'Trusted_Connection': 'yes',  # Use Windows Authentication
         },
-    }
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'faceDT',
+#         'HOST': 'DARGON-MSI\\SQLEXPRESS',  # Use double backslashes for the backslash in the server name
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#             'MARS_Connection': True,
+#             'Trusted_Connection': 'yes',  # Use Windows Authentication
+#         },
+#     }
+# }
+
 
 
 # Password validation
