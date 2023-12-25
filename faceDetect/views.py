@@ -44,22 +44,22 @@ def facescan(request):
 
 @api_view(["POST"])
 def getdata(request):
-    if request.method == 'POST':
-            image = request.FILES['image']
-            images_name = Util.handle_media_file(image,"file")
-            name = request.POST.get('name')
-            bloodgroup = request.POST.get('bloodGroup')
-            gender = request.POST.get('gender')
-            age = request.POST.get('age')
-            criminalrecord = request.POST.get('record')
+    if request:
+        image = request.FILES['image']
+        images_name = Util.handle_media_file(image,"file")
+        name = request.POST.get('name')
+        bloodgroup = request.POST.get('bloodGroup')
+        gender = request.POST.get('gender')
+        age = request.POST.get('age')
+        criminalrecord = request.POST.get('record')
 
-            data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
-            final_name = str(images_name).replace(".jpg","")
-            finaldata = json.dumps(data)
-            with open(f"{s.BASE_DIR}\\facedetect\\media\\{final_name}.json","w+") as file:
-                  file.writelines(finaldata)
-                  file.close() 
-            return HttpResponse("Criminal record set")
+        data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
+        final_name = str(images_name).replace(".jpg","").replace(".png","")
+        finaldata = json.dumps(data)
+        with open(f"{s.BASE_DIR}\\facedetect\\media\\{final_name}.json","w+") as file:
+                file.writelines(finaldata)
+                file.close() 
+        return HttpResponse("Criminal record set")
     else:
         return HttpResponse("record not set")
             
