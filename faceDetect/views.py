@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .utils import Util
 from .serizailer import imageform
 from django.conf import settings as s
@@ -24,15 +24,15 @@ def facescan(request):
 
                 if result[1]:
                     binary_data = Util.imagetoBinary(f'{s.BASE_DIR}\\facedetect\\media\\{result[0]}')
-                    response = HttpResponse(f'\\facedetect\\media\\{result[0]}', content_type='image/jpeg')
-                    response['Content-Disposition'] = 'attachment; filename="image.jpg"'
-                    print(response)
+                    # response = HttpResponse(f'\\facedetect\\media\\{result[0]}', content_type='image/jpeg')
+                    # response['Content-Disposition'] = 'attachment; filename="image.jpg"'
+                    # print(response)
                     json_data = ""
                     json_name = str(result[0]).replace(".jpg",".json").replace(".png",".json")
-                    with open(json_name,"r+") as file:
-                        json_data = json.load(json_name)
-
-                    return [response,json_data]
+                    print(json_name)
+                    with open(f'{s.BASE_DIR}\\facedetect\\media\\{json_name}',"r") as file:
+                        json_data = json.load(file)
+                    return JsonResponse({'img':f'\\facedetect\\media\\{result[0]}','data':json_data})
                 else:
                     return HttpResponse({"match not found!"})
         else:
@@ -65,7 +65,7 @@ def addcriminal(request):
         image = request.FILES['image']
         images_name = Util.handle_media_file(image,"file")
         name = request.POST.get('name')
-        bloodgroup = request.POST.get('bloodGroup')
+        bloodgroup = request.POST.get('bloodgroup')
         gender = request.POST.get('gender')
         age = request.POST.get('age')
         criminalrecord = request.POST.get('criminalrecord')

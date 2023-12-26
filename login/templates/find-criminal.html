@@ -68,10 +68,7 @@
       />
     </div>
     <div id="criminal-info">
-      <p>Full Name: ******** ****** *******</p>
-      <p>Age: **</p>
-      <p>Gender: ****</p>
-      <p>Criminal Record: **************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************</p>
+      
     </div>
   </body>
   <!-- photo shuffle code -->
@@ -124,8 +121,16 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              databaseImage.src = response;
+              console.log(response)
+              databaseImage.src = response.img;
               databaseImage.classList.remove("blur-image-effect");
+              $('#criminal-info').html(`<p>Full Name: ${response.data.name}</p>
+              <p>Age: ${response.data.age}</p>
+              <p>Gender: ${response.data.gender}</p>
+              <p>Blood Group: ${response.data.bloodgroup}</p>
+              <p>Criminal Record:
+                ${response.data.criminalrecord}
+              </p>`)
               clearInterval(imagechanging);
               document.getElementById("target-image").style.display = "none";
               document.getElementById("fingerprint").style.display = "none";
@@ -164,7 +169,9 @@
               scanningBar.style.display = "block";
               document.getElementById("database-image").style.visibility = "visible";
               document.getElementById("fingerprint").style.visibility = "visible";
+              var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
               var formData = new FormData();
+              formData.append("csrfmiddlewaretoken", csrf_token);
               formData.append("image", file);
               $.ajax({
                 url: "D1",
@@ -173,7 +180,7 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                  databaseImage.src = response;
+                  databaseImage.src = response.img;
                   databaseImage.classList.remove("blur-image-effect");
                   clearInterval(imagechanging);
                   document.getElementById("target-image").style.display = "none";

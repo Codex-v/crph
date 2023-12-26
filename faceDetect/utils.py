@@ -45,6 +45,7 @@ class Util:
         for file_name in os.listdir(media_dir):
             if file_name.endswith(".jpg"):
                 unknown_picture = face_recognition.load_image_file(os.path.join(f"{s.BASE_DIR}\\facedetect\\media", file_name))
+                print(file_name)
                 # unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]
                 unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]
 
