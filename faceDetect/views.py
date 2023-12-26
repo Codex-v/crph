@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import HttpResponse
@@ -36,7 +36,7 @@ def facescan(request):
                 else:
                     return HttpResponse({"match not found!"})
         else:
-                params = {"img": f'{s.BASE_DIR}'}
+                params = {"img": f'{s.BASE_DIR}',"all_imgs_path":f'm'}
                 return render(request, 'find-criminal.html',params)
 
 @api_view(["POST"])
@@ -60,5 +60,24 @@ def getdata(request):
     else:
         return HttpResponse("record not set")
             
+def addcriminal(request):
+    if request.method == "POST":
+        image = request.FILES['image']
+        images_name = Util.handle_media_file(image,"file")
+        name = request.POST.get('name')
+        bloodgroup = request.POST.get('bloodGroup')
+        gender = request.POST.get('gender')
+        age = request.POST.get('age')
+        criminalrecord = request.POST.get('record')
+
+        data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
+        final_name = str(images_name).replace(".jpg","").replace(".png","")
+        finaldata = json.dumps(data)
+        with open(f"{s.BASE_DIR}\\facedetect\\media\\{final_name}.json","w+") as file:
+                file.writelines(finaldata)
+                file.close() 
+        return redirect("dashboard")
+    else:
+        return render(request, 'add-criminal.html')
 
       

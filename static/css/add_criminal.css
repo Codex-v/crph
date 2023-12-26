@@ -1,0 +1,27 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    color: white;
+}
+
+#header {
+    text-align: center;
+    color: white;
+    font-size: 22px;
+    font-weight: bolder;
+    text-shadow: 0 0 2px #00f, 0 0 4px #00f, 0 0 6px #00f, 0 0 8px #00f, 0 0 10px #00f, 0 0 12px #00f, 0 0 14px #00f;
+}
+
+#form-div {
+    width: 40rem;
+    box-shadow: 0 0 10px #00f;
+    border: #00f 1px solid;
+    height: 18rem;
+}

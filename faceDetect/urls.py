@@ -6,7 +6,8 @@ from .views import *
 
 urlpatterns = [
     path('D1',facescan),
-    path("setdata",getdata)
+    path("setdata",getdata),
+    path("addcriminal",addcriminal)
 ]
 
 if settings.DEBUG:

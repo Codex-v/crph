@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
 </head>
 <body style="background-image: url('{% static 'images/scifi/dashboard.jpg' %}');">
-    <div id="add-criminal">
+    <div id="add-criminal" onclick="redirectToAddCriminal()">
         <img src="{% static 'images/scifi/user-avatar.png' %}" alt="add_criminal_icon" height="100" width="100">
         <p>Add Criminal</p>        
     </div>
@@ -18,6 +18,9 @@
 <script>
     function redirectToFaceDetect() {
         window.location.href = '/facedetect/D1';
+    }
+    function redirectToAddCriminal() {
+        window.location.href = '/addcriminal';
     }
 </script>
 </html>
