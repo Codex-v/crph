@@ -48,7 +48,7 @@ def getdata(request):
         bloodgroup = request.POST.get('bloodGroup')
         gender = request.POST.get('gender')
         age = request.POST.get('age')
-        criminalrecord = request.POST.get('record')
+        criminalrecord = request.POST.get('criminalrecord')
 
         data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
         final_name = str(images_name).replace(".jpg","").replace(".png","")
@@ -68,8 +68,7 @@ def addcriminal(request):
         bloodgroup = request.POST.get('bloodGroup')
         gender = request.POST.get('gender')
         age = request.POST.get('age')
-        criminalrecord = request.POST.get('record')
-
+        criminalrecord = request.POST.get('criminalrecord')
         data = {"name":name,"bloodgroup":bloodgroup,"gender":gender,"age":age,"criminalrecord":criminalrecord}
         final_name = str(images_name).replace(".jpg","").replace(".png","")
         finaldata = json.dumps(data)
@@ -80,4 +79,3 @@ def addcriminal(request):
     else:
         return render(request, 'add-criminal.html')
 
-      

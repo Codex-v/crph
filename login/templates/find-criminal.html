@@ -34,7 +34,6 @@
       <div class="glow-text">Target Image</div>
       <div id="dropZone">
         <form
-          action="/facedetect/D1"
           method="post"
           enctype="multipart/form-data"
           id="targetImage_form"
@@ -43,7 +42,7 @@
           <input
             type="file"
             id="fileInput"
-            accept="image/*"
+            accept=".jpg, .png"
             style="display: none"
             name="image"
           />
@@ -114,7 +113,9 @@
           scanningBar.style.display = "block";
           document.getElementById("database-image").style.visibility = "visible";
           document.getElementById("fingerprint").style.visibility = "visible";
+          var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
           var formData = new FormData();
+          formData.append("csrfmiddlewaretoken", csrf_token);
           formData.append("image", file);
           $.ajax({
             url: "D1",
