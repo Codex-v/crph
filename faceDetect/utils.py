@@ -52,14 +52,17 @@ class Util:
                 result = face_recognition.compare_faces([my_face_encoding], unknown_face_encoding)[0]
                 if result:
                     results.append((file_name, result))
+                    return results[0]
                     break
+        if result == False:
+            return "Result Not Found"
+        
         # for file_name, result in results:
         #     print(f"{file_name}: {result}")
         #     # if result:
         #     #     return results
 
         # Return results or use them as needed in your application
-        return results[0]
     @staticmethod
     def imagetoBinary(image):
             with open(image, 'rb') as image_file:

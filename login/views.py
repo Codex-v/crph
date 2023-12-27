@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
 def login(request):
+    params = {"img": f'{s.BASE_DIR}'}
     if request.method == 'POST':  
         if((FacedetectUser.objects.filter(email=request.POST['email']).exists())):
                 user = FacedetectUser.objects.filter(email=request.POST['email'])[0]
@@ -22,13 +23,13 @@ def login(request):
                     messages.add_message(request,messages.INFO,'Welcome to criminal detection system '+ user.first_name+' '+user.last_name)
                     return redirect("/dashboard")
                 else:
-                    messages.error(request, 'Oops, Wrong password, please try a diffrerent one')
-                    return HttpResponse({"message": "WRONG PASSWORD"})
+                    messages.error(request, 'Wrong password')
+                    return render(request, 'login.html',params)
         else:
-                messages.error(request, 'Oops, That police ID do not exist')
-                return HttpResponse({"message": "DOESNT EXIST"})
+                messages.error(request, 'Wrong Email')
+                return render(request, 'login.html',params)
+
     else:
-        params = {"img": f'{s.BASE_DIR}'}
         return render(request, 'login.html',params)
 
 

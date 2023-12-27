@@ -138,8 +138,13 @@
               document.getElementById("body").style.backgroundSize = "cover";
               document.getElementById("criminal-info").style.display = "block";
             },
-            error: function (xhr, status, error) {
-              console.error("Error uploading the image:", error);
+            error: function (response) {
+              console.log(response)
+              console.log(response.status)
+              if(response.status == 404) {
+                alert("Match Not Found");
+                location.reload();
+              }
             },
           });
         };
